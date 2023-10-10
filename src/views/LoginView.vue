@@ -27,12 +27,11 @@ import { RouterLink } from "vue-router";
   width: 50%;
 }
 .btnImage{
- width: 7%;
+  width: 5%;
   margin-right: 4%;
 }
 .btnText{
   margin-left: 4%;
-  font-size: large ;
   color: #FFFFFF;
 }
 .button {

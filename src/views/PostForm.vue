@@ -1,5 +1,23 @@
 <script setup>
+import { reactive, computed } from 'vue'
 import { RouterLink } from 'vue-router'
+
+const fields = reactive({
+  titulo: {
+    valor: 'Aqui vai seu Título',
+    done: false
+  },
+  descricao: {
+    valor: 'Aqui vai sua descrição...',
+    done: false
+  },
+  tags: {
+    valor: 'Aqui vão suas tags',
+    done: false
+  }
+})
+
+const classInput = computed(() => (field) => (fields[field].done ? 'input-new' : 'input-original'))
 </script>
 
 <template>
@@ -16,10 +34,17 @@ import { RouterLink } from 'vue-router'
     <div class="main">
       <div class="form-box">
         <form class="form">
-          <input class="input" type="text" placeholder="Título" />
-          <textarea class="input" placeholder="Descrição" />
-          <input class="input" type="text" placeholder="Categoria" />
-          <input class="input" type="text" placeholder="Tags" />
+          <input
+            class="input"
+            :class="classInput('titulo')"
+            type="text"
+            v-model="fields.titulo.valor"
+            @blur="fields.titulo.done = true"
+          />
+          <textarea class="input area"
+            :class="classInput('descricao')"
+            v-model="fields.descricao.valor"
+            @blur="fields.descricao.done = true" />
 
           <label class="file-input-area">
             <img class="file-input-image" src="../components/icons/clip.svg" />
@@ -35,7 +60,11 @@ import { RouterLink } from 'vue-router'
             />
           </label>
 
-          <input class="input" type="text" placeholder="Conteúdo" />
+          <input class="input"
+            :class="classInput('tags')"
+            type="text"
+            v-model="fields.tags.valor"
+            @blur="fields.tags.done = true" />
           <button class="button">Enviar</button>
         </form>
       </div>
@@ -44,10 +73,43 @@ import { RouterLink } from 'vue-router'
 </template>
 
 <style scoped>
-.button{
-  background-color: #2CDA9D;
+.input-original {
+  width: 80%;
+  margin-top: 5%;
+  font-family: inherit;
+  font-size: small;
+  padding: 2%;
+  outline: 1px solid #353b3c;
+  color: #353b3c;
+  border-radius: 1vh;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.input-new {
+  color: #353b3c;
+  outline: #2cda9d solid 2px;
+  padding: 2% 1% 2% 1%;
+  transition: font-weight 0.15s, all 0.3s ;
+  border-radius: 1vh;
+}
+.input {
+  width: 80%;
+  margin-top: 5%;
+  font-family: inherit;
+  font-size: small;
   border: none;
-  width: 70%;
+  padding: 2%;
+  resize: none;
+}
+.area {
+  resize: none;
+  padding-bottom: 5%;
+}
+.button {
+  background-color: #2cda9d;
+  border: none;
+  width: 80%;
   height: 10%;
   margin-top: 10%;
   border-radius: 1vh;
@@ -55,28 +117,36 @@ import { RouterLink } from 'vue-router'
   align-items: center;
   padding: 2%;
 }
-.image-text{
+.button:hover{
+  cursor: pointer;
+  background-color: #1F9D7D;
+  transition: background 0.15s;
+}
+.image-text {
   font-size: medium;
   color: #353b3c;
 }
-.file-input-image{
+.file-input-image {
   width: 80%;
   margin-right: 2%;
 }
-.file-input-area{
+.file-input-area {
   display: flex;
   align-items: center;
-  width: 50%;
+  justify-content: center;
+  width: 60%;
+  padding: 2%;
+  margin-top: 5% ;
 }
-.file-input{
+.file-input {
   display: none;
 }
-.highlight{
+.highlight {
   text-decoration: underline;
-  color: #2CDA9D ;
+  color: #2cda9d;
 }
 .form-box {
-  width: 100%;
+  width: 80%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -84,6 +154,7 @@ import { RouterLink } from 'vue-router'
   background-color: #f6f6f6;
 }
 .form {
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
