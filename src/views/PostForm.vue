@@ -20,8 +20,9 @@ import { RouterLink } from 'vue-router'
           <textarea class="input" placeholder="Descrição" />
           <input class="input" type="text" placeholder="Categoria" />
           <input class="input" type="text" placeholder="Tags" />
-          <label>
 
+          <label class="file-input-area">
+            <img class="file-input-image" src="../components/icons/clip.svg" />
             <span class="image-text">
               Arraste arquivos aqui para anexar, ou
               <span class="highlight">procure-os</span>
@@ -30,8 +31,7 @@ import { RouterLink } from 'vue-router'
               type="file"
               accept="image/png, image/jpeg, video/mp4"
               name="file_upload"
-              v-on:change="handleFileChange($event)"
-              class="hidden"
+              class="file-input"
             />
           </label>
 
@@ -44,10 +44,32 @@ import { RouterLink } from 'vue-router'
 </template>
 
 <style scoped>
-
+.button{
+  background-color: #2CDA9D;
+  border: none;
+  width: 70%;
+  height: 10%;
+  margin-top: 10%;
+  border-radius: 1vh;
+  display: flex;
+  align-items: center;
+  padding: 2%;
+}
 .image-text{
   font-size: medium;
   color: #353b3c;
+}
+.file-input-image{
+  width: 80%;
+  margin-right: 2%;
+}
+.file-input-area{
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+.file-input{
+  display: none;
 }
 .highlight{
   text-decoration: underline;
