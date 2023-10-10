@@ -38,7 +38,7 @@ import { RouterLink } from "vue-router";
   background-color: #2CDA9D;
   border: none;
   width: 70%;
-  height: 10%;
+  padding: 3% 1% 3% 1%;
   margin-top: 10%;
   border-radius: 1vh;
   display: flex;
@@ -98,6 +98,5 @@ import { RouterLink } from "vue-router";
   box-shadow: 0px 2px 3px -1px rgba(0, 0, 0, 0.50);
   margin-top: 10% ;
   width: 70%;
-  padding: 4%;
 }
 </style>

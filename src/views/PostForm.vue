@@ -25,17 +25,19 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
     <div class="sidebar">
       <img class="logo" src="../components/icons/logo-green.svg" />
       <div class="nav-list">
-        <RouterLink class="nav-links" to="/home">Home</RouterLink>
+        <RouterLink class="nav-links" to="/post">Novo Post</RouterLink>
         <RouterLink class="nav-links" to="/home">Home</RouterLink>
         <RouterLink class="nav-links" to="/home">Home</RouterLink>
       </div>
     </div>
 
+    // Eventualmente transformar esse form em um modal pra colocar em uma tela que dê pra ver todos os posts
+
     <div class="main">
       <div class="form-box">
         <form class="form">
           <input
-            class="input"
+            class="input titulo"
             :class="classInput('titulo')"
             type="text"
             v-model="fields.titulo.valor"
@@ -45,14 +47,14 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
             :class="classInput('descricao')"
             v-model="fields.descricao.valor"
             @blur="fields.descricao.done = true" />
-
-          <label class="file-input-area">
+          
+          <label tabindex="0" class="file-input-area">
             <img class="file-input-image" src="../components/icons/clip.svg" />
-            <span class="image-text">
+            <span class="image-text" >
               Arraste arquivos aqui para anexar, ou
               <span class="highlight">procure-os</span>
             </span>
-            <input
+            <input 
               type="file"
               accept="image/png, image/jpeg, video/mp4"
               name="file_upload"
@@ -73,6 +75,7 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
 </template>
 
 <style scoped>
+
 .input-original {
   width: 80%;
   margin-top: 5%;
@@ -104,7 +107,7 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
 }
 .area {
   resize: none;
-  padding-bottom: 5%;
+  padding-bottom: 20% ;
 }
 .button {
   background-color: #2cda9d;
@@ -116,6 +119,8 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
   display: flex;
   align-items: center;
   padding: 2%;
+  color: #f6f6f6;
+  font-weight: bold ;
 }
 .button:hover{
   cursor: pointer;
@@ -127,16 +132,18 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
   color: #353b3c;
 }
 .file-input-image {
-  width: 80%;
+  width: 10%;
   margin-right: 2%;
 }
 .file-input-area {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60%;
-  padding: 2%;
+  width: 80%;
   margin-top: 5% ;
+  cursor: pointer;
+  padding: 2%;
+
 }
 .file-input {
   display: none;
@@ -144,6 +151,11 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
 .highlight {
   text-decoration: underline;
   color: #2cda9d;
+}
+.highlight:hover {
+  cursor: pointer;
+  color: #1F9D7D;
+  transition: background 0.15s;
 }
 .form-box {
   width: 80%;

@@ -8,7 +8,7 @@ import { RouterLink } from "vue-router";
     <div class="sidebar">
         <img class="logo" src="../components/icons/logo-green.svg">
         <div class="nav-list">
-            <RouterLink class="nav-links" to="/home">Home</RouterLink>
+            <RouterLink class="nav-links" to="/post">Novo Post</RouterLink>
             <RouterLink class="nav-links" to="/home">Home</RouterLink>
             <RouterLink class="nav-links" to="/home">Home</RouterLink>
         </div>  
