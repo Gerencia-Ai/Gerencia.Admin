@@ -19,7 +19,7 @@ const fields = reactive({
 
 const classInput = computed(() => (field) => (fields[field].done ? 'input-new' : 'input-original'))
 </script>
-
+// Eventualmente transformar esse form em um modal pra colocar em uma tela que dê pra ver todos os posts
 <template>
   <div class="wrapper">
     <div class="sidebar">
@@ -31,7 +31,6 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
       </div>
     </div>
 
-    // Eventualmente transformar esse form em um modal pra colocar em uma tela que dê pra ver todos os posts
 
     <div class="main">
       <div class="form-box">
