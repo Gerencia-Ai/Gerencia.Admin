@@ -1,0 +1,4 @@
+1. Ajustar o css o Select do PostView
+    - Deixar O selecionado na cor de Highlight. Aumentar a fonte. Os select option quando hover deixar sombra em baixo com animação
+2. Eventuais Botões Radio Tem que ser verdes, lá nos salvos do Twitter eu tenho tutorial
+3. Ajustar o var da Fonte pra ser responsiva com o tamanho de tela, mesma coisa do de cima

@@ -7,8 +7,8 @@ import { RouterLink } from "vue-router";
     <div class="loginBox">
       <div class="loginForm">
         <h1 class="loginTitle">Bem vind@ de volta!</h1>
-        <input class="loginInput" type="text" placeholder="Usuário">
-        <input class="loginInput" type="password" placeholder="Senha">
+        <input class="loginInput" type="email" required placeholder="Seu Email">
+        <input class="loginInput" type="password" required placeholder="Senha">
         <RouterLink to="/home" class="button">
           <p class="btnText">Login</p>
           <img class="btnImage" src="../components/icons/arrow-right.svg">
