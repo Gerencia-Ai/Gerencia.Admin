@@ -4,7 +4,7 @@
       <img class="logo" src="../components/icons/logo-green.svg" />
       <div class="nav-list">
         <RouterLink class="nav-links" to="/post">Novo Post</RouterLink>
-        <RouterLink class="nav-links" to="/home">Home</RouterLink>
+        <RouterLink class="nav-links" to="/new-workspace">Novo Workspace</RouterLink>
         <RouterLink class="nav-links" to="/home">Home</RouterLink>
       </div>
     </div>
@@ -15,7 +15,6 @@
                     <option class="selec" value="selec">Selecione um Projeto</option>
                 </select>
                 <div class="new-post">
-                  Novo Post
                   <button class="add-btn">+</button>
                 </div>
             </div>
@@ -46,9 +45,14 @@
 <style scoped>
 .add-btn{
   background-color: #f6f6f6;
+  outline: #353b3c 1px solid;
   border: none;
-  font-size: large;
+  border-radius: 20%;
+  overflow: hidden;
   color: #353b3c;
+  width: 15%;
+  aspect-ratio: 4/4;
+  
 }
 .add-btn:hover{
   cursor: pointer;
@@ -69,7 +73,7 @@
     background-color: #f6f6f6;
 }
 .past-post-box {
-    outline: #353b3c 1px solid;
+    box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
     padding: 2%;
     height: 50%;
     display: flex;
@@ -87,12 +91,13 @@
     padding: 2%;
     justify-content: space-between;
     background-color: #f6f6f6;
+    
 }
 .new-post{
     width: 20%;
     height: 50%;
     display: flex;
-    justify-content: space-between;
+    justify-content: end;  
     align-items: center;
     margin-left: 3%;
     margin-right: 3%;
@@ -123,7 +128,8 @@
     color: #353b3c; 
     border-radius: 1% ;
     overflow: hidden;
-
+    cursor: pointer ;
+    padding-left: 0.5%; 
     
 }
 
@@ -140,6 +146,8 @@
 .post-box{
     width: 100%;
     height: 100%;
+    border-radius: 1%;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     background-color: #f6f6f6;

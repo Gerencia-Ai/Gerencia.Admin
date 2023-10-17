@@ -15,12 +15,24 @@ import { RouterLink } from "vue-router";
     </div>
     
     <div class="main">
-        bbb
+        <div class="work-box">ababa</div>
+        <div class="work-box">babab</div>
     </div>
   </div>
 </template>
 
 <style>
+.work-box{
+    width: 45%;
+    height: 100%;
+    border-radius: 1%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #f6f6f6;
+    margin: 1%;
+
+}
 
 .logo{
     width: 40%;
@@ -63,6 +75,7 @@ import { RouterLink } from "vue-router";
 }
 .main{
   width: 90%;
+  padding: 2%;
   height: 100vh;
   display: flex;
   align-items: center;
