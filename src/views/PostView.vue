@@ -1,3 +1,7 @@
+<script setup>
+import PostForm from './PostForm.vue';
+</script>
+
 <template>
   <div class="wrapper">
     <div class="sidebar">
@@ -9,149 +13,189 @@
       </div>
     </div>
     <div class="main">
-        <div class="post-box">
-            <div class="header">  
-                <select class="proj-select">
-                    <option class="selec" value="selec">Selecione um Projeto</option>
-                </select>
-                <div class="new-post">
-                  <button class="add-btn">+</button>
-                </div>
-            </div>
-            <div class="body">
-                <div class="past-post-box">
-                    <img class="post-img" src="../components/icons/logo-green.svg" />
-                    <p class="post-title">Titulo</p>
-                    <p class="post-description">Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum</p>
-                </div>
-                <div class="past-post-box">
-                    <img class="post-img" src="../components/icons/logo-green.svg" />
-                    <p class="post-title">Titulo</p>
-                    <p class="post-description">Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum</p>
-                </div>
-                <div class="past-post-box">
-                    <img class="post-img" src="../components/icons/logo-green.svg" />
-                    <p class="post-title">Titulo</p>
-                    <p class="post-description">Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum</p>
-                </div>
-                
-                
-            </div>
+      <div class="post-box">
+        <div class="header">
+          <select class="proj-select">
+            <option class="selec" value="selec">Selecione um Projeto</option>
+          </select>
+          <div class="new-post">
+            <button
+              class="newPost-btn"
+              data-bs-toggle="collapse"
+              data-bs-target="#postForm"
+              aria-expanded="false"
+              aria-controls="collapseWidthExample"
+            >
+              +
+            </button>
+          </div>
         </div>
+        <div class="body">
+          <div class="past-posts">
+            <div class="past-post-box">
+            <img class="post-img" src="../components/icons/logo-green.svg" />
+            <p class="post-title">Titulo</p>
+            <p class="post-description">
+              Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et
+              Sum
+            </p>
+          </div>
+          <div class="past-post-box">
+            <img class="post-img" src="../components/icons/logo-green.svg" />
+            <p class="post-title">Titulo</p>
+            <p class="post-description">
+              Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et
+              Sum
+            </p>
+          </div>
+          <div class="past-post-box">
+            <img class="post-img" src="../components/icons/logo-green.svg" />
+            <p class="post-title">Titulo</p>
+            <p class="post-description">
+              Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et
+              Sum
+            </p>
+          </div>
+
+          </div>
+
+          <div class="post-form-wrapper">
+            <div class="collapse collapse-horizontal" id="postForm">
+              <div class="post-form">
+                <PostForm />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.add-btn{
+
+.post-form{
+  box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
+  width: 100%;
+  background-color: #f6f6f6;
+  border-radius: 1%;
+  padding: 2%;
+  box-sizing: border-box;
+}
+.newPost-btn {
   background-color: #f6f6f6;
   outline: #353b3c 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
   border-radius: 20%;
   overflow: hidden;
   color: #353b3c;
   width: 15%;
   aspect-ratio: 4/4;
-  
 }
-.add-btn:hover{
+.newPost-btn:hover {
   cursor: pointer;
   background-color: #e6e6e6;
   transition: background 0.15s;
 }
-.post-title{
-    font-size: 1.2rem;
+.post-title {
+  font-size: 1.2rem;
 }
-.post-description{
-    opacity: 0.8;
-    width: 100%;
-    
+.post-description {
+  opacity: 0.8;
+  width: 100%;
 }
-.post-img{
-    width: 100%;
-    height: 50%;
-    background-color: #f6f6f6;
+.post-img {
+  width: 100%;
+  aspect-ratio: 4/4;
+  height: 50%;
+  background-color: #f6f6f6;
 }
 .past-post-box {
-    box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
-    padding: 2%;
-    height: 50%;
-    display: flex;
-    flex-direction: column;
-    border-radius: 2%;
-    max-width: 30%;
-    overflow: hidden;
+  box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
+  padding: 2%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2%;
+  max-width: 30%;
+  overflow: hidden;
 }
+.past-posts{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2%;
+  padding: 0 3%;
+  justify-content: space-between;
+  background-color: #f6f6f6;
+}
+
+
 .body{
-    width: 100%;
-    height: 90%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2%;
-    padding: 2%;
-    justify-content: space-between;
-    background-color: #f6f6f6;
-    
+  width: 100%;
+  height: 90%;
+  display: flex;
+  justify-content: space-between;
 }
-.new-post{
-    width: 20%;
-    height: 50%;
-    display: flex;
-    justify-content: end;  
-    align-items: center;
-    margin-left: 3%;
-    margin-right: 3%;
-    border-radius: 5px;
-    border: none;
-    background-color: #f6f6f6;
-    font-size: 1rem;
-    color: #353b3c;
+.new-post {
+  width: 20%;
+  height: 50%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-left: 3%;
+  margin-right: 3%;
+  border-radius: 5px;
+  border: none;
+  background-color: #f6f6f6;
+  font-size: 1rem;
+  color: #353b3c;
 }
-.selec{
-    color: #353b3c;
-    font-size: 1rem;
-    padding: 1%;
-    background-color: #f6f6f6;
-    border-radius: 1%;
+.selec {
+  color: #353b3c;
+  font-size: 1rem;
+  padding: 1%;
+  background-color: #f6f6f6;
+  border-radius: 1%;
 }
-.proj-select{
-    width: 20%;
-    height: 50%;
-    display: flex;
-    justify-content: baseline;
-    margin-left: 3%;
-    margin-right: 3%;
-    border-radius: 5px;
-    border: none;
-    background-color: #f6f6f6;
-    font-size: 1rem;
-    color: #353b3c; 
-    border-radius: 1% ;
-    overflow: hidden;
-    cursor: pointer ;
-    padding-left: 0.5%; 
-    
+.proj-select {
+  width: 20%;
+  height: 50%;
+  display: flex;
+  justify-content: baseline;
+  margin-left: 3%;
+  margin-right: 3%;
+  border-radius: 5px;
+  border: none;
+  background-color: #f6f6f6;
+  font-size: 1rem;
+  color: #353b3c;
+  border-radius: 1%;
+  overflow: hidden;
+  cursor: pointer;
+  padding-left: 0.5%;
 }
 
-.header{
-    width: 100%;
-    height: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #f6f6f6;
-    color: #353b3c;
-
+.header {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f6f6f6;
+  color: #353b3c;
 }
-.post-box{
-    width: 100%;
-    height: 100%;
-    border-radius: 1%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    background-color: #f6f6f6;
-
+.post-box {
+  width: 100%;
+  height: 100%;
+  border-radius: 1%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: #f6f6f6;
 }
 .sidebar {
   width: 10%;

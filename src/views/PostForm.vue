@@ -1,6 +1,6 @@
-<script setup>
+<script>
 import { reactive, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+
 
 const fields = reactive({
   titulo: {
@@ -18,21 +18,19 @@ const fields = reactive({
 })
 
 const classInput = computed(() => (field) => (fields[field].done ? 'input-new' : 'input-original'))
+export default {
+  name: 'PostForm',
+  setup() {
+    return {
+      fields,
+      classInput
+    }
+  }
+}
 </script>
 // Eventualmente transformar esse form em um modal pra colocar em uma tela que dê pra ver todos os posts
 <template>
-  <div class="wrapper">
-    <div class="sidebar">
-      <img class="logo" src="../components/icons/logo-green.svg" />
-      <div class="nav-list">
-        <RouterLink class="nav-links" to="/post">Novo Post</RouterLink>
-        <RouterLink class="nav-links" to="/home">Home</RouterLink>
-        <RouterLink class="nav-links" to="/home">Home</RouterLink>
-      </div>
-    </div>
-
-
-    <div class="main">
+    <div class="main-form">
       <div class="form-box">
         <form class="form">
           <input
@@ -70,7 +68,6 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
         </form>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
@@ -157,7 +154,7 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
   transition: background 0.15s;
 }
 .form-box {
-  width: 80%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -165,54 +162,18 @@ const classInput = computed(() => (field) => (fields[field].done ? 'input-new' :
   background-color: #f6f6f6;
 }
 .form {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.logo {
-  width: 40%;
-  margin-top: 10%;
 }
 
-.wrapper {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.nav-list {
-  height: 100%;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-}
 
-.nav-links {
-  margin: 5%;
-  text-decoration: none;
-  color: #353b3c;
-  font-weight: 400;
-  font-size: 1.1rem;
-}
-.sidebar {
-  width: 10%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: #f6f6f6;
-  box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.5);
-}
-.main {
-  width: 90%;
-  height: 100vh;
+.main-form {
+  width: 100%;
+  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2% 10% 2% 10%;
 }
 </style>
