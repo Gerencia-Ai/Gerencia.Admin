@@ -1,5 +1,35 @@
 <script setup>
 import PostForm from './PostForm.vue';
+import { ref, onMounted } from 'vue'
+
+import PostService from '../services/PostService.js'
+
+const posts = ref([])
+const currentPost = ref({
+  name: ''
+})
+
+onMounted(async () => {
+  const data = await PostService.getAllPosts()
+  posts.value = data
+})
+
+async function savePost() {
+  await PostService.saveGenre(currentPost.value)
+  const data = await PostService.getAllPosts()
+  posts.value = data
+  currentPost.value = { name: '' }
+}
+
+async function deletePost(post) {
+  await PostService.deleteGenre(post)
+  const data = await PostService.getAllGenres()
+  posts.value = data
+}
+
+function editPost(post) {
+  currentPost.value = { ...post }
+}
 </script>
 
 <template>
