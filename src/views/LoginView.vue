@@ -1,19 +1,40 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { reactive } from 'vue'
+
+import { useAuthStore } from '../stores/auth.js'
+import { useRouter} from 'vue-router'
+
+const authStore = useAuthStore()
+const router = useRouter()
+
+const user = reactive({
+  email: '',
+  password: '',
+})
+
+async function submit() {
+  try {
+    await authStore.login(user)
+    router.push('/home')
+  }catch (error) {
+      console.error(error);
+    }
+  
+} 
 </script>
 
 <template>
   <div class="wrapper">
     <div class="loginBox">
-      <div class="loginForm">
+      <form @submit.prevent="submit" class="loginForm">
         <h1 class="loginTitle">Bem vind@ de volta!</h1>
-        <input class="loginInput" type="email" required placeholder="Seu Email">
-        <input class="loginInput" type="password" required placeholder="Senha">
-        <RouterLink to="/home" class="button">
+        <input class="loginInput" v-model="user.email" type="email" required placeholder="Seu Email">
+        <input class="loginInput" v-model="user.password" type="password" required placeholder="Senha">
+        <button type="submit" class="button">
           <p class="btnText">Login</p>
           <img class="btnImage" src="../components/icons/arrow-right.svg">
-        </RouterLink>
-      </div>
+        </button>
+      </form>
       <div class="logo">
         <img class="logoImg"  src="../assets/logo.svg">
       </div>
