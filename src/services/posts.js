@@ -1,5 +1,5 @@
 import api from '../plugins/api'
-
+    
 class PostService {
   async getAllPosts() {
     const response = await api.get('/posts/')

@@ -1,25 +1,31 @@
-import { defineStore } from 'pinia'
 import { reactive, computed } from 'vue'
-import LoginApi from '../services/login.js'
-const loginapi = new LoginApi()
+import { defineStore } from 'pinia'
+import authService from '../services/auth'
 
 export const useAuthStore = defineStore('auth', () => {
-    const state = reactive({
-        access: '',
-        refresh: ''
-    })
+  const state = reactive({
+    token: null,
+    loggedIn: true
+  })
 
-    const token = computed(()=> state.access)
-    
-    async function login(user) {
-        try {
-            const data =  await loginapi.Login(user)
-            state.access = data.access
-            state.refresh = data.refresh
-        } catch(e) {
-            console.log(e)
-        }
+  const loggedIn = computed(() => state.loggedIn)
+  const token = computed(() => state.token)
+
+  const login = async (user) => {
+    try {
+      const data = await authService.login(user)
+      state.token = data.access
+      state.loggedIn = true
+    } catch (error) {
+      state.token = null
+      state.loggedIn = false
     }
+  }
 
-  return { login, token}
+  const logout = () => {
+    state.token = null
+    state.loggedIn = false
+  }
+
+  return { loggedIn, token, login, logout }
 })

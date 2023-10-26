@@ -1,35 +1,14 @@
 <script setup>
-import PostForm from './PostForm.vue';
+import PostForm from './PostForm.vue'
 import { ref, onMounted } from 'vue'
 
-import PostService from '../services/PostService.js'
-
-const posts = ref([])
-const currentPost = ref({
-  name: ''
-})
+import PostService from '../services/posts.js'
 
 onMounted(async () => {
   const data = await PostService.getAllPosts()
   posts.value = data
 })
 
-async function savePost() {
-  await PostService.saveGenre(currentPost.value)
-  const data = await PostService.getAllPosts()
-  posts.value = data
-  currentPost.value = { name: '' }
-}
-
-async function deletePost(post) {
-  await PostService.deleteGenre(post)
-  const data = await PostService.getAllGenres()
-  posts.value = data
-}
-
-function editPost(post) {
-  currentPost.value = { ...post }
-}
 </script>
 
 <template>
@@ -62,31 +41,14 @@ function editPost(post) {
         </div>
         <div class="body">
           <div class="past-posts">
-            <div class="past-post-box">
-            <img class="post-img" src="../components/icons/logo-green.svg" />
-            <p class="post-title">Titulo</p>
-            <p class="post-description">
-              Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et
-              Sum
-            </p>
-          </div>
-          <div class="past-post-box">
-            <img class="post-img" src="../components/icons/logo-green.svg" />
-            <p class="post-title">Titulo</p>
-            <p class="post-description">
-              Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et
-              Sum
-            </p>
-          </div>
-          <div class="past-post-box">
-            <img class="post-img" src="../components/icons/logo-green.svg" />
-            <p class="post-title">Titulo</p>
-            <p class="post-description">
-              Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et
-              Sum
-            </p>
-          </div>
-
+              <div v-for="post in posts" :key="post.id" class="past-post-box">
+                <img class="post-img" src="../components/icons/logo-green.svg" />
+                <p class="post-title">{{ post.title }}</p>
+                <p class="post-description">
+                  Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo
+                  et Sum
+                </p>
+              </div>
           </div>
 
           <div class="post-form-wrapper">
@@ -103,8 +65,7 @@ function editPost(post) {
 </template>
 
 <style scoped>
-
-.post-form{
+.post-form {
   box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
   width: 100%;
   background-color: #f6f6f6;
@@ -153,7 +114,7 @@ function editPost(post) {
   max-width: 30%;
   overflow: hidden;
 }
-.past-posts{
+.past-posts {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -163,8 +124,7 @@ function editPost(post) {
   background-color: #f6f6f6;
 }
 
-
-.body{
+.body {
   width: 100%;
   height: 90%;
   display: flex;

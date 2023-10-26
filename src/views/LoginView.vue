@@ -1,16 +1,20 @@
 <script setup>
 import { reactive } from 'vue'
-
 import { useAuthStore } from '../stores/auth.js'
 import { useRouter} from 'vue-router'
 
-const authStore = useAuthStore()
 const router = useRouter()
+const authStore = useAuthStore()
 
 const user = reactive({
   email: '',
-  password: '',
+  password: ''
 })
+
+function login() {
+  authStore.login({ ...user })
+}
+
 
 async function submit() {
   try {
@@ -28,9 +32,9 @@ async function submit() {
     <div class="loginBox">
       <form @submit.prevent="submit" class="loginForm">
         <h1 class="loginTitle">Bem vind@ de volta!</h1>
-        <input class="loginInput" v-model="user.email" type="email" required placeholder="Seu Email">
-        <input class="loginInput" v-model="user.password" type="password" required placeholder="Senha">
-        <button type="submit" class="button">
+        <input class="loginInput" v-model="user.email" id="email" type="email" required placeholder="Seu Email">
+        <input class="loginInput" v-model="user.password" id="password" type="password" required placeholder="Senha">
+        <button @click="login" type="submit" class="button">
           <p class="btnText">Login</p>
           <img class="btnImage" src="../components/icons/arrow-right.svg">
         </button>
