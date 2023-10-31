@@ -1,30 +1,33 @@
 <script setup>
 import PostForm from './PostForm.vue'
 import { ref, onMounted } from 'vue'
+import PostService from '../services/posts'
 
-import PostService from '../services/posts.js'
+const posts = ref([])
+const currentPost = ref({
+  name: ''
+})
 
 onMounted(async () => {
   const data = await PostService.getAllPosts()
   posts.value = data
 })
 
-
-async function save() {
-  await postService.saveGenre(currentPost.value)
-  const data = await postService.getAllPosts()
+async function savePost() {
+  await PostService.savePost(currentPost.value)
+  const data = await PostService.getAllPosts()
   posts.value = data
   currentPost.value = { name: '' }
 }
 
-async function deleteGenre(genre) {
-  await genreService.deleteGenre(genre)
-  const data = await genreService.getAllGenres()
-  genres.value = data
+async function deletePost(post) {
+  await PostService.deletePost(post)
+  const data = await PostService.getAllPosts()
+  posts.value = data
 }
 
-function editGenre(genre) {
-  currentGenre.value = { ...genre }
+function editPost(post) {
+  currentPost.value = { ...post }
 }
 </script>
 
@@ -58,14 +61,17 @@ function editGenre(genre) {
         </div>
         <div class="body">
           <div class="past-posts">
-              <div v-for="post in posts" :key="post.id" class="past-post-box">
+            <div v-for="post in posts" :key="post.id" class="past-post-box">
+              <div class="img-pad">
                 <img class="post-img" src="../components/icons/logo-green.svg" />
-                <p class="post-title">{{ post.title }}</p>
+              </div>
+              <div class="text-pad">
+                <p class="post-title">{{ post.titulo }}</p>
                 <p class="post-description">
-                  Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo et Sum Lorem Ipsum Dolor Argo
-                  et Sum
+                  {{ post.descricao }}
                 </p>
               </div>
+            </div>
           </div>
 
           <div class="post-form-wrapper">
@@ -118,8 +124,11 @@ function editGenre(genre) {
 .post-img {
   width: 100%;
   aspect-ratio: 4/4;
-  height: 50%;
+  height: 80%;
   background-color: #f6f6f6;
+}
+.img-pad{
+  height: 50%;
 }
 .past-post-box {
   box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
