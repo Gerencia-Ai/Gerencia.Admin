@@ -1,7 +1,7 @@
-
+import api from '../plugins/api'
 class AuthService {
   async login(user) {
-    const response = await api.post('https://gerencia-back-dev-thtb.2.ie-1.fl0.io/token/', user)
+    const response = await api.post('/token/', user)
     return response.data
   }
 }

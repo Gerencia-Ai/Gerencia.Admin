@@ -9,6 +9,23 @@ onMounted(async () => {
   posts.value = data
 })
 
+
+async function save() {
+  await postService.saveGenre(currentPost.value)
+  const data = await postService.getAllPosts()
+  posts.value = data
+  currentPost.value = { name: '' }
+}
+
+async function deleteGenre(genre) {
+  await genreService.deleteGenre(genre)
+  const data = await genreService.getAllGenres()
+  genres.value = data
+}
+
+function editGenre(genre) {
+  currentGenre.value = { ...genre }
+}
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 import api from '../plugins/api'
-    
+
 class PostService {
   async getAllPosts() {
     const response = await api.get('/posts/')
@@ -15,7 +15,7 @@ class PostService {
     return response.data
   }
   async deletePost(post) {
-    const response = await api.delete(`/post/${post.id}/`)
+    const response = await api.delete(`/posts/${post.id}/`)
     return response.data
   }
 }
