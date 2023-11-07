@@ -1,77 +1,58 @@
-<script>
-import { reactive, computed } from 'vue'
+<script setup>
+import { ref, onMounted } from 'vue'
+import PostService from '../services/posts'
 
-
-const fields = reactive({
-  titulo: {
-    valor: 'Aqui vai seu Título',
-    done: false
-  },
-  descricao: {
-    valor: 'Aqui vai sua descrição...',
-    done: false
-  },
-  tags: {
-    valor: 'Aqui vão suas tags',
-    done: false
-  }
+const posts = ref([])
+const currentPost = ref({
+  titulo: '',
+  descricao: ''
 })
 
-const classInput = computed(() => (field) => (fields[field].done ? 'input-new' : 'input-original'))
-export default {
-  name: 'PostForm',
-  setup() {
-    return {
-      fields,
-      classInput
-    }
-  }
+onMounted(async () => {
+  const data = await PostService.getAllPosts()
+  posts.value = data
+})
+
+async function save() {
+  await PostService.savePost(currentPost.value)
+  const data = await PostService.getAllPosts()
+  posts.value = data
+  currentPost.value = { titulo: '', descricao: '' }
+}
+
+function editPost(post) {
+  currentPost.value = { ...post }
 }
 </script>
-// Eventualmente transformar esse form em um modal pra colocar em uma tela que dê pra ver todos os posts
 <template>
-    <div class="main-form">
-      <div class="form-box">
-        <form class="form">
-          <input
-            class="input titulo"
-            :class="classInput('titulo')"
-            type="text"
-            v-model="fields.titulo.valor"
-            @blur="fields.titulo.done = true"
-          />
-          <textarea class="input area"
-            :class="classInput('descricao')"
-            v-model="fields.descricao.valor"
-            @blur="fields.descricao.done = true" />
-          
-          <label tabindex="0" class="file-input-area">
-            <img class="file-input-image" src="../components/icons/clip.svg" />
-            <span class="image-text" >
-              Arraste arquivos aqui para anexar, ou
-              <span class="highlight">procure-os</span>
-            </span>
-            <input 
-              type="file"
-              accept="image/png, image/jpeg, video/mp4"
-              name="file_upload"
-              class="file-input"
-            />
-          </label>
+  <div class="main-form">
+    <div class="form-box">
+      <form class="form">
+        <input class="input input-original" type="text" v-model="currentPost.titulo" />
+        <textarea class="input area input-original" v-model="currentPost.descricao" />
 
-          <input class="input"
-            :class="classInput('tags')"
-            type="text"
-            v-model="fields.tags.valor"
-            @blur="fields.tags.done = true" />
-          <button class="button">Enviar</button>
-        </form>
-      </div>
+        <label tabindex="0" class="file-input-area">
+          <img class="file-input-image" src="../components/icons/clip.svg" />
+          <span class="image-text">
+            Arraste arquivos aqui para anexar, ou
+            <span class="highlight">procure-os</span>
+          </span>
+          <input
+            type="file"
+            accept="image/png, image/jpeg, video/mp4"
+            name="file_upload"
+            class="file-input"
+          />
+        </label>
+
+        <input class="input input-original" type="text" />
+        <button @click="save" class="button">Enviar</button>
+      </form>
     </div>
+  </div>
 </template>
 
 <style scoped>
-
 .input-original {
   width: 80%;
   margin-top: 5%;
@@ -89,7 +70,9 @@ export default {
   color: #353b3c;
   outline: #2cda9d solid 2px;
   padding: 2% 1% 2% 1%;
-  transition: font-weight 0.15s, all 0.3s ;
+  transition:
+    font-weight 0.15s,
+    all 0.3s;
   border-radius: 1vh;
 }
 .input {
@@ -103,7 +86,7 @@ export default {
 }
 .area {
   resize: none;
-  padding-bottom: 20% ;
+  padding-bottom: 20%;
 }
 .button {
   background-color: #2cda9d;
@@ -116,11 +99,11 @@ export default {
   align-items: center;
   padding: 2%;
   color: #f6f6f6;
-  font-weight: bold ;
+  font-weight: bold;
 }
-.button:hover{
+.button:hover {
   cursor: pointer;
-  background-color: #1F9D7D;
+  background-color: #1f9d7d;
   transition: background 0.15s;
 }
 .image-text {
@@ -136,10 +119,9 @@ export default {
   align-items: center;
   justify-content: center;
   width: 80%;
-  margin-top: 5% ;
+  margin-top: 5%;
   cursor: pointer;
   padding: 2%;
-
 }
 .file-input {
   display: none;
@@ -150,7 +132,7 @@ export default {
 }
 .highlight:hover {
   cursor: pointer;
-  color: #1F9D7D;
+  color: #1f9d7d;
   transition: background 0.15s;
 }
 .form-box {
@@ -167,7 +149,6 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-
 
 .main-form {
   width: 100%;
