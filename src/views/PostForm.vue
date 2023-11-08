@@ -5,7 +5,8 @@ import PostService from '../services/posts'
 const posts = ref([])
 const currentPost = ref({
   titulo: '',
-  descricao: ''
+  descricao: '',
+  projeto: '',
 })
 
 onMounted(async () => {
@@ -15,19 +16,16 @@ onMounted(async () => {
 
 async function save() {
   await PostService.savePost(currentPost.value)
+  currentPost.value = { titulo: '', descricao: '', projeto: '' }
   const data = await PostService.getAllPosts()
   posts.value = data
-  currentPost.value = { titulo: '', descricao: '' }
 }
 
-function editPost(post) {
-  currentPost.value = { ...post }
-}
 </script>
 <template>
   <div class="main-form">
     <div class="form-box">
-      <form class="form">
+      <form class="form" @submit.prevent="save">
         <input class="input input-original" type="text" v-model="currentPost.titulo" />
         <textarea class="input area input-original" v-model="currentPost.descricao" />
 
@@ -39,14 +37,13 @@ function editPost(post) {
           </span>
           <input
             type="file"
-            accept="image/png, image/jpeg, video/mp4"
+            accept="image/png, image/jpeg"
             name="file_upload"
             class="file-input"
           />
+          <input type="number" class="input input-original" v-model="currentPost.projeto" />
         </label>
-
-        <input class="input input-original" type="text" />
-        <button @click="save" class="button">Enviar</button>
+        <button type="submit" class="button">Enviar</button>
       </form>
     </div>
   </div>

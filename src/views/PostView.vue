@@ -13,12 +13,6 @@ onMounted(async () => {
   posts.value = data
 })
 
-async function savePost() {
-  await PostService.savePost(currentPost.value)
-  const data = await PostService.getAllPosts()
-  posts.value = data
-  currentPost.value = { name: '' }
-}
 
 async function deletePost(post) {
   await PostService.deletePost(post)
@@ -70,6 +64,8 @@ function editPost(post) {
                 <p class="post-description">
                   {{ post.descricao }}
                 </p>
+                <button @click="deletePost(post)"> Deletar </button>
+                <button @click="editPost(post)"> Editar </button>
               </div>
             </div>
           </div>
@@ -138,7 +134,8 @@ function editPost(post) {
   flex-direction: column;
   border-radius: 2%;
   max-width: 30%;
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden; 
 }
 .past-posts {
   width: 100%;
