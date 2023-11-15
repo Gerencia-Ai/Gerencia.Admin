@@ -13,7 +13,6 @@ onMounted(async () => {
   posts.value = data
 })
 
-
 async function deletePost(post) {
   await PostService.deletePost(post)
   const data = await PostService.getAllPosts()
@@ -64,9 +63,9 @@ function editPost(post) {
                 <p class="post-description">
                   {{ post.descricao }}
                 </p>
-                <button @click="deletePost(post)"> Deletar </button>
-                <button @click="editPost(post)"> Editar </button>
               </div>
+              <button @click="deletePost(post)">Deletar</button>
+              <button @click="editPost(post)">Editar</button>
             </div>
           </div>
 
@@ -123,7 +122,7 @@ function editPost(post) {
   height: 80%;
   background-color: #f6f6f6;
 }
-.img-pad{
+.img-pad {
   height: 50%;
 }
 .past-post-box {
@@ -135,7 +134,7 @@ function editPost(post) {
   border-radius: 2%;
   max-width: 30%;
   overflow-y: scroll;
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }
 .past-posts {
   width: 100%;
@@ -145,6 +144,7 @@ function editPost(post) {
   padding: 0 3%;
   justify-content: space-between;
   background-color: #f6f6f6;
+  padding-top: 2%;
 }
 
 .body {
@@ -200,6 +200,8 @@ function editPost(post) {
   justify-content: space-between;
   background-color: #f6f6f6;
   color: #353b3c;
+  box-shadow: 0px 1px 10px -3px rgba(0, 0, 0, 0.5);
+  z-index: 1;
 }
 .post-box {
   width: 100%;

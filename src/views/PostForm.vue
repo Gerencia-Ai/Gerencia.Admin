@@ -6,7 +6,7 @@ const posts = ref([])
 const currentPost = ref({
   titulo: '',
   descricao: '',
-  projeto: '',
+  projeto: ''
 })
 
 onMounted(async () => {
@@ -20,7 +20,6 @@ async function save() {
   const data = await PostService.getAllPosts()
   posts.value = data
 }
-
 </script>
 <template>
   <div class="main-form">
@@ -30,19 +29,16 @@ async function save() {
         <textarea class="input area input-original" v-model="currentPost.descricao" />
 
         <label tabindex="0" class="file-input-area">
-          <img class="file-input-image" src="../components/icons/clip.svg" />
+          <div class="input-image-box">
+            <img class="file-input-image" src="../components/icons/clip.svg" />
+          </div>
           <span class="image-text">
             Arraste arquivos aqui para anexar, ou
             <span class="highlight">procure-os</span>
           </span>
-          <input
-            type="file"
-            accept="image/png, image/jpeg"
-            name="file_upload"
-            class="file-input"
-          />
-          <input type="number" class="input input-original" v-model="currentPost.projeto" />
+          <input type="file" accept="image/png, image/jpeg" name="file_upload" class="file-input" />
         </label>
+        <input type="number" class="input input-original" v-model="currentPost.projeto" />
         <button type="submit" class="button">Enviar</button>
       </form>
     </div>
@@ -50,28 +46,28 @@ async function save() {
 </template>
 
 <style scoped>
+.input-image-box{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
+  border-radius: 1vh;
+  margin-right: 2%;
+}
 .input-original {
   width: 80%;
   margin-top: 5%;
   font-family: inherit;
   font-size: small;
   padding: 2%;
-  outline: 1px solid #353b3c;
   color: #353b3c;
   border-radius: 1vh;
   font-weight: 500;
   opacity: 0.8;
 }
 
-.input-new {
-  color: #353b3c;
-  outline: #2cda9d solid 2px;
-  padding: 2% 1% 2% 1%;
-  transition:
-    font-weight 0.15s,
-    all 0.3s;
-  border-radius: 1vh;
-}
 .input {
   width: 80%;
   margin-top: 5%;
@@ -85,53 +81,11 @@ async function save() {
   resize: none;
   padding-bottom: 20%;
 }
-.button {
-  background-color: #2cda9d;
-  border: none;
-  width: 80%;
-  height: 10%;
-  margin-top: 10%;
-  border-radius: 1vh;
-  display: flex;
-  align-items: center;
-  padding: 2%;
-  color: #f6f6f6;
-  font-weight: bold;
-}
-.button:hover {
-  cursor: pointer;
-  background-color: #1f9d7d;
-  transition: background 0.15s;
-}
 .image-text {
   font-size: medium;
   color: #353b3c;
 }
-.file-input-image {
-  width: 10%;
-  margin-right: 2%;
-}
-.file-input-area {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
-  margin-top: 5%;
-  cursor: pointer;
-  padding: 2%;
-}
-.file-input {
-  display: none;
-}
-.highlight {
-  text-decoration: underline;
-  color: #2cda9d;
-}
-.highlight:hover {
-  cursor: pointer;
-  color: #1f9d7d;
-  transition: background 0.15s;
-}
+
 .form-box {
   width: 100%;
   height: 100%;
