@@ -1,5 +1,34 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import WorkspaceService from '../services/workspaces'
+
+const workspaces = ref([])
+const currentWorkspace = ref({
+  name: ''
+})
+
+onMounted(async () => {
+  const data = await WorkspaceService.getAllWorkspaces()
+  workspaces.value = data
+})
+
+async function save() {
+  await WorkspaceService.saveWorkspace(currentWorkspace.value)
+  const data = await WorkspaceService.getAllWorkspaces()
+  workspaces.value = data
+  currentWorkspace.value = { nome: '', descricao: '' }
+}
+
+async function deleteWorkspace(workspace) {
+  await WorkspaceService.deleteWorkspace(workspace)
+  const data = await WorkspaceService.getAllWorkspaces()
+  workspaces.value = data
+}
+
+function editWorkspace(workspace) {
+  currentWorkspace.value = { ...workspace }
+}
 </script>
 
 <template>
@@ -14,9 +43,9 @@ import { RouterLink } from 'vue-router'
     </div>
 
     <div class="main">
-      <div class="work-box">
-        <input class="input" type="text" placeholder="Nome do Workspace" />
-        <textarea class="input area" type="text" placeholder="Descrição do Workspace" />
+      <form class="work-box" @submit.prevent="save" >
+        <input v-model="currentWorkspace.nome" class="input" type="text" placeholder="Nome do Workspace" />
+        <textarea v-model="currentWorkspace.descricao" class="input area" type="text" placeholder="Descrição do Workspace" />
         <label tabindex="0" class="file-input-area">
           <div class="input-image-box">
             <img class="file-input-image" src="../components/icons/clip.svg" />
@@ -27,14 +56,62 @@ import { RouterLink } from 'vue-router'
           </span>
           <input type="file" accept="image/png, image/jpeg" name="file_upload" class="file-input" />
         </label>
-        <button class="button">Enviar</button>
+        <button type="submit" class="button">Enviar</button>
+      </form>
+
+      <div class="work-box">
+        <div class="past-posts">
+          <h1>Workspaces</h1>
+          <div v-for="workspace in workspaces" :key="workspace.id" class="past-post-box">
+            <div class="img-pad">
+              <img class="post-img" src="../components/icons/logo-green.svg" />
+            </div>
+            <div class="post-info">
+              <h2>{{ workspace.nome }}</h2>
+              <p>{{ workspace.descricao }}</p>
+            </div>
+            <div class="post-btns">
+              <button class="edit-btn" @click="editWorkspace(workspace)">
+                Editar
+              </button>
+              <button class="delete-btn" @click="deleteWorkspace(workspace)">
+                Deletar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="work-box">babab</div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.img-pad{
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+.past-posts{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.past-post-box {
+  box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
+  padding: 2%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 2%;
+  width: 80%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
 .area{
   resize: none;
   height: 30%;

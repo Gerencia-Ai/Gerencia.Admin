@@ -13,6 +13,9 @@ onMounted(async () => {
   const data = await PostService.getAllPosts()
   posts.value = data
 })
+function editPost(post) {
+  currentPost.value = { ...post }
+}
 
 async function save() {
   await PostService.savePost(currentPost.value)
