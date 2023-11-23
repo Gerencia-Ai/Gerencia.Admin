@@ -1,5 +1,5 @@
 import api from '../plugins/api'
-import useAuthStore from '../stores/auth'
+import {useAuthStore} from '../stores/auth'
 
 class WorkspaceService {
   async getAllWorkspaces() {

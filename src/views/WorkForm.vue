@@ -2,10 +2,19 @@
 import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import WorkspaceService from '../services/workspaces'
+import UserService from '../services/users';
+
+const users = ref([])
 
 const workspaces = ref([])
 const currentWorkspace = ref({
-  name: ''
+  nome: '',
+  descricao: ''
+})
+
+onMounted(async () => {
+  const data = await UserService.getAllUsers()
+  users.value = data
 })
 
 onMounted(async () => {
@@ -56,6 +65,7 @@ function editWorkspace(workspace) {
           </span>
           <input type="file" accept="image/png, image/jpeg" name="file_upload" class="file-input" />
         </label>
+        <input type="number" v-model="currentWorkspace.alunos.id" />
         <button type="submit" class="button">Enviar</button>
       </form>
 
