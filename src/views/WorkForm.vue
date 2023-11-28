@@ -4,8 +4,8 @@ import { ref, onMounted } from 'vue'
 import WorkspaceService from '../services/workspaces'
 import UserService from '../services/users';
 
-const users = ref([])
 
+const users = ref([])
 const workspaces = ref([])
 const currentWorkspace = ref({
   nome: '',
@@ -65,7 +65,16 @@ function editWorkspace(workspace) {
           </span>
           <input type="file" accept="image/png, image/jpeg" name="file_upload" class="file-input" />
         </label>
-        <input type="number" v-model="currentWorkspace.alunos.id" />
+        <select v-model="currentWorkspace.alunos">
+          <option v-for="user in users" :key="user.id">
+            {{ user.first_name + " " + user.last_name}}
+          </option>
+        </select>
+        <select v-model="currentWorkspace.professor">
+          <option v-for="user in users" :key="user.id">
+            {{ user.first_name + " " + user.last_name}}
+          </option>
+        </select>
         <button type="submit" class="button">Enviar</button>
       </form>
 

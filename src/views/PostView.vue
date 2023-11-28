@@ -2,10 +2,17 @@
 import PostForm from './PostForm.vue'
 import { ref, onMounted } from 'vue'
 import PostService from '../services/posts'
+import WorkspaceService from '../services/workspaces'
 
 const posts = ref([])
+const workspaces = ref([])
 const currentPost = ref({
   name: ''
+})
+
+onMounted(async () => {
+  const data = await WorkspaceService.getAllWorkspaces()
+  workspaces.value = data
 })
 
 onMounted(async () => {
@@ -38,7 +45,9 @@ function editPost(post) {
       <div class="post-box">
         <div class="header">
           <select class="proj-select">
-            <option class="selec" value="selec">Selecione um Projeto</option>
+            <option v-for="workspace in workspaces" :key="workspace.id">
+              {{ workspace.nome }}
+            </option>
           </select>
           <div class="new-post">
             <button
