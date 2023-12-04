@@ -1,16 +1,27 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+
 import WorkspaceService from '../services/workspaces'
 import UserService from '../services/users';
+import imageService from '../services/images.js'
 
-
+const coverUrl = ref('')
+const file = ref(null)
 const users = ref([])
 const workspaces = ref([])
-const currentWorkspace = ref({
+
+const currentWorkspace = reactive({
   nome: '',
-  descricao: ''
+  descricao: '',
+  alunos: [],
+  professor: ''
 })
+
+function onFileChange(e) {
+  file.value = e.target.files[0]
+  coverUrl.value = URL.createObjectURL(file.value)
+}
 
 onMounted(async () => {
   const data = await UserService.getAllUsers()
@@ -23,10 +34,16 @@ onMounted(async () => {
 })
 
 async function save() {
-  await WorkspaceService.saveWorkspace(currentWorkspace.value)
-  const data = await WorkspaceService.getAllWorkspaces()
-  workspaces.value = data
-  currentWorkspace.value = { nome: '', descricao: '' }
+  const image = await imageService.uploadImage(file.value)
+  currentWorkspace.cover_attachment_key = image.attachment_key
+  await WorkspaceService.saveWorkspace(currentWorkspace)
+  Object.assign(currentWorkspace, {
+    nome: '',
+    descricao: '',
+    alunos: [],
+    professor: '',
+    cover_attachment_key: ''
+  })
 }
 
 async function deleteWorkspace(workspace) {
@@ -63,15 +80,16 @@ function editWorkspace(workspace) {
             Arraste arquivos aqui para anexar, ou
             <span class="highlight">procure-os</span>
           </span>
-          <input type="file" accept="image/png, image/jpeg" name="file_upload" class="file-input" />
+          <input type="file" accept="image/png, image/jpeg" name="file_upload" class="file-input" @change="onFileChange" />
         </label>
-        <select v-model="currentWorkspace.alunos">
-          <option v-for="user in users" :key="user.id">
-            {{ user.first_name + " " + user.last_name}}
-          </option>
-        </select>
-        <select v-model="currentWorkspace.professor">
-          <option v-for="user in users" :key="user.id">
+        <div id="preview">
+            <div class="cover">
+              <img v-if="coverUrl" :src="coverUrl" />
+            </div>
+        </div>
+
+        <select v-model="currentWorkspace.alunos" class="input" multiple>
+          <option v-for="user in users" :key="user.id" v-bind:value="user.id">
             {{ user.first_name + " " + user.last_name}}
           </option>
         </select>
@@ -83,11 +101,21 @@ function editWorkspace(workspace) {
           <h1>Workspaces</h1>
           <div v-for="workspace in workspaces" :key="workspace.id" class="past-post-box">
             <div class="img-pad">
-              <img class="post-img" src="../components/icons/logo-green.svg" />
+              <img class="post-img" v-bind:src="workspace"/>
+              <!-- {{ workspace }} -->
             </div>
             <div class="post-info">
               <h2>{{ workspace.nome }}</h2>
-              <p>{{ workspace.descricao }}</p>
+              <p> {{ workspace.descricao }} </p>
+              Professor: 
+              <p>{{ workspace.professor.first_name + " " + workspace.professor.last_name }}</p>
+              Alunos:
+              <ul>
+                <li v-for="aluno in workspace.alunos" :key="aluno.id">
+                {{ aluno.first_name + " " + aluno.last_name }}
+              </li>
+              </ul>
+              
             </div>
             <div class="post-btns">
               <button class="edit-btn" @click="editWorkspace(workspace)">
@@ -105,6 +133,30 @@ function editWorkspace(workspace) {
 </template>
 
 <style scoped>
+
+#preview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 80%;
+  aspect-ratio: 16/6;
+  margin: 2%;
+}
+
+#preview img {
+  max-width: 100%;
+  aspect-ratio: 16/6;
+}
+
+#preview .cover {
+  width: 100%;
+  aspect-ratio: 16/6;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .img-pad{
   width: 100%;
   justify-content: center;
@@ -122,7 +174,8 @@ function editWorkspace(workspace) {
 .past-post-box {
   box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
   padding: 2%;
-  height: 40%;
+  min-height: 40%;
+  margin: 2%;
   display: flex;
   flex-direction: column;
   justify-content: center;
