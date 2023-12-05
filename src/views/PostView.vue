@@ -20,6 +20,7 @@ onMounted(async () => {
   posts.value = data
 })
 
+
 async function deletePost(post) {
   await PostService.deletePost(post)
   const data = await PostService.getAllPosts()

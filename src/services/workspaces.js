@@ -17,7 +17,7 @@ class WorkspaceService {
     }
     return response.data
   }
-  async deleteWorkspac(workspace) {
+  async deleteWorkspace(workspace) {
     const response = await api.delete(`/projetos/${workspace.id}/`)
     return response.data
   }

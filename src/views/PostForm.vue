@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import PostService from '../services/posts'
+import WorkspaceService from '../services/workspaces'
+
 
 const posts = ref([])
 const currentPost = ref({
@@ -8,14 +10,19 @@ const currentPost = ref({
   descricao: '',
   projeto: ''
 })
+const workspaces = ref([])
+
+
+onMounted(async () => {
+  const data = await WorkspaceService.getAllWorkspaces()
+  workspaces.value = data
+})
 
 onMounted(async () => {
   const data = await PostService.getAllPosts()
   posts.value = data
 })
-function editPost(post) {
-  currentPost.value = { ...post }
-}
+
 
 async function save() {
   await PostService.savePost(currentPost.value)
@@ -41,7 +48,11 @@ async function save() {
           </span>
           <input type="file" accept="image/png, image/jpeg" name="file_upload" class="file-input" />
         </label>
-        <input type="number" class="input input-original" v-model="currentPost.projeto" />
+        <select v-model="currentPost.projeto" class="input input-original" >
+          <option v-for="workspace in workspaces" :key="workspace.id" :value="workspace.id">
+            {{ workspace.nome }}
+          </option>
+        </select>
         <button type="submit" class="button">Enviar</button>
       </form>
     </div>

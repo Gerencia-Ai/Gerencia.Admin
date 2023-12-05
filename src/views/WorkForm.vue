@@ -35,15 +35,17 @@ onMounted(async () => {
 
 async function save() {
   const image = await imageService.uploadImage(file.value)
-  currentWorkspace.cover_attachment_key = image.attachment_key
+  currentWorkspace.capa_attachment_key = image.attachment_key
   await WorkspaceService.saveWorkspace(currentWorkspace)
   Object.assign(currentWorkspace, {
     nome: '',
     descricao: '',
     alunos: [],
     professor: '',
-    cover_attachment_key: ''
+    capa_attachment_key: ''
   })
+  const data = await WorkspaceService.getAllWorkspaces()
+  workspaces.value = data
 }
 
 async function deleteWorkspace(workspace) {
@@ -88,7 +90,7 @@ function editWorkspace(workspace) {
             </div>
         </div>
 
-        <select v-model="currentWorkspace.alunos" class="input" multiple>
+        <select v-model="currentWorkspace.alunos" class="input select" multiple>
           <option v-for="user in users" :key="user.id" v-bind:value="user.id">
             {{ user.first_name + " " + user.last_name}}
           </option>
@@ -101,8 +103,7 @@ function editWorkspace(workspace) {
           <h1>Workspaces</h1>
           <div v-for="workspace in workspaces" :key="workspace.id" class="past-post-box">
             <div class="img-pad">
-              <img class="post-img" v-bind:src="workspace"/>
-              <!-- {{ workspace }} -->
+              <img class="post-img" v-bind:src="workspace.capa.file"/>
             </div>
             <div class="post-info">
               <h2>{{ workspace.nome }}</h2>
@@ -133,13 +134,25 @@ function editWorkspace(workspace) {
 </template>
 
 <style scoped>
+.select{
+  height: 30%;
+  margin-bottom: -5%;
+}
+.post-img{
+  width: 100%;
+  aspect-ratio: 16/6;
+  box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
+  border-radius: 1vh;
+  margin-top: 10% ;
+}
+
 
 #preview {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 80%;
+  max-width: 60%;
   aspect-ratio: 16/6;
   margin: 2%;
 }
@@ -162,6 +175,9 @@ function editWorkspace(workspace) {
   justify-content: center;
   display: flex;
 }
+.image-text {
+  font-size: small;
+}
 .past-posts{
   width: 100%;
   height: 100%;
@@ -174,13 +190,15 @@ function editWorkspace(workspace) {
 .past-post-box {
   box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.103);
   padding: 2%;
-  min-height: 40%;
   margin: 2%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: 2%;
-  width: 80%;
+  width: 90%;
+  min-height: 60%;
+  aspect-ratio: 4/6;
+  
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -192,6 +210,7 @@ function editWorkspace(workspace) {
 .button{
   width: 80%;
   height: 5%;
+  margin-bottom: 5%;
 }
 .input-image-box{
   width: 100%;
@@ -258,8 +277,8 @@ function editWorkspace(workspace) {
   box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.5);
 }
 .file-input-area {
-  width: 35%;
-  padding: 3% 2%;
+  width: 30%;
+  padding: 3% 1%;
 }
 .main {
   width: 90%;
