@@ -1,10 +1,12 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useAuthStore } from '../stores/auth.js'
 import { useRouter } from 'vue-router'
+import Loading from 'vue-loading-overlay'
 
 const router = useRouter()
 const authStore = useAuthStore()
+const isLoading = ref(false);
 
 const user = reactive({
   email: '',
@@ -16,16 +18,19 @@ const user = reactive({
 // }
 
 async function submit() {
+  isLoading.value = true
   try {
     await authStore.login(user)
     router.push('/home')
   } catch (error) {
     console.error(error)
   }
+  isLoading.value = false
 }
 </script>
 
 <template>
+  <loading v-model:active="isLoading" is-full-page class="loading" />
   <div class="wrapper">
     <div class="loginBox">
       <form @submit.prevent="submit" class="loginForm">
@@ -69,6 +74,10 @@ async function submit() {
 .btnText {
   margin-left: 4%;
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: -0.1%;
 }
 .button {
   background-color: #2cda9d;
@@ -78,7 +87,7 @@ async function submit() {
   margin-top: 10%;
   border-radius: 1vh;
   display: flex;
-  align-items: center;
+  align-items: center !important; 
   justify-content: space-between;
   text-decoration: none;
 }

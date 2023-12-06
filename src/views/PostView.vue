@@ -3,12 +3,14 @@ import PostForm from './PostForm.vue'
 import { ref, onMounted } from 'vue'
 import PostService from '../services/posts'
 import WorkspaceService from '../services/workspaces'
+import Loading from 'vue-loading-overlay'
 
 const posts = ref([])
 const workspaces = ref([])
 const currentPost = ref({
   name: ''
 })
+const isLoading = ref(false)
 
 onMounted(async () => {
   const data = await WorkspaceService.getAllWorkspaces()
@@ -16,15 +18,27 @@ onMounted(async () => {
 })
 
 onMounted(async () => {
+  isLoading.value = true
   const data = await PostService.getAllPosts()
   posts.value = data
+  isLoading.value = false
 })
 
-
 async function deletePost(post) {
+  isLoading.value = true
   await PostService.deletePost(post)
   const data = await PostService.getAllPosts()
   posts.value = data
+  isLoading.value = false
+}
+
+async function save() {
+  isLoading.value = true
+  await PostService.savePost(currentPost.value)
+  currentPost.value = { titulo: '', descricao: '', projeto: '' }
+  const data = await PostService.getAllPosts()
+  posts.value = data
+  isLoading.value = false
 }
 
 function editPost(post) {
@@ -42,6 +56,9 @@ function editPost(post) {
         <RouterLink class="nav-links" to="/home">Home</RouterLink>
       </div>
     </div>
+
+    <loading v-model:active="isLoading" is-full-page class="loading" />
+
     <div class="main">
       <div class="post-box">
         <div class="header">
