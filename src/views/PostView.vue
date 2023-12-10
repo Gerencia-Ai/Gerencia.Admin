@@ -49,7 +49,7 @@ function editPost(post) {
 <template>
   <div class="wrapper">
     <div class="sidebar">
-      <img class="logo" src="../components/icons/logo-green.svg" />
+      <img class="logo-nav" src="../components/icons/logo-green.svg" />
       <div class="nav-list">
         <RouterLink class="nav-links" to="/post">Novo Post</RouterLink>
         <RouterLink class="nav-links" to="/new-workspace">Novo Workspace</RouterLink>
@@ -138,6 +138,10 @@ function editPost(post) {
 }
 .post-title {
   font-size: 1.2rem;
+}
+.logo-nav{
+  width: 40%;
+  margin-top: 10%;
 }
 .post-description {
   opacity: 0.8;
