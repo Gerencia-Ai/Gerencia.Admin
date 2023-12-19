@@ -1,6 +1,6 @@
 # Gerencia.Admin
 
-This template should help get you started developing with Vue 3 in Vite.
+This app is meant to help you to manage your projects.
 
 ## Recommended IDE Setup
 
